@@ -2,23 +2,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff; /* Match feedback card background */
+    background-color: #fff; 
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px; /* Adjust as needed */
-    box-sizing: border-box; /* Include padding and border in width */
+    max-width: 400px; 
+    box-sizing: border-box; 
 }
 
 .single-line-input-heading {
     margin-bottom: 16px;
-    font-weight: bold; /* Add bold font style for heading */
+    font-weight: bold; 
 }
 
 .single-line-input {
-    margin-bottom: 16px; /* Space between input and buttons */
+    margin-bottom: 16px; 
     width: 100%;
 }
 
