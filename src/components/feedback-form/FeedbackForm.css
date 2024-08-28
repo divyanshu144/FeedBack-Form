@@ -1,0 +1,33 @@
+.form-wrapper {
+    margin: 20px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    margin-top: 20px; 
+}
+
+.form-card {
+    width: 500px;
+    height:1360px; 
+}
+
+.add-fields {
+    width: 25%; 
+}
+
+.form-field {
+    margin-bottom: 10px; 
+}
+
+.add-fields {
+    width: 317px;
+    height:1554px; 
+    overflow-y: auto; 
+    margin-left:200px;
+    background-color: #FFFFFF;
+    
+}
+

@@ -1,0 +1,154 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; 
+}
+
+.card-new-form {
+  width: 306px;
+  height: 379px;
+  border-radius: 15px;
+}
+
+.card-content-new {
+  margin-top: 150px;
+  text-align: center;
+  padding: 20px;
+}
+
+.icon-button {
+  background-color: #2196f3;
+  color: white;
+  margin-top: 20px;
+  width: 51px;
+  height: 51px;
+}
+
+.add-icon {
+  width: 60.67px;
+  height: 60.67px;
+}
+
+
+.card {
+  border-radius: 8px;
+  width: 310px;
+  height: 379px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card-container {
+  background-color: #F5D563;
+  width:306px;
+  height:68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  border-radius: 10px;
+  margin-left: -14px
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.typography-header{
+  width:277px;
+  height:28px;
+  margin-top:10px;
+}
+
+.title {
+  font: 700 20px/32px 'Roboto';
+  letter-spacing: 0.15px;
+  text-align: left;
+}
+
+.typography-content{
+  margin-top:20px;
+}
+
+.subtitle {
+  margin-top: 8px;
+}
+
+.button-container{
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px 16px 48px
+}
+.view-button {
+  background-color: #673AB7;
+  color: #fff;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  width:179px;
+  height:42px;
+
+}
+
+.view-button:hover {
+  background-color: #5E35B1;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  padding: 16px 48px 16px 0px;
+  gap:8px;
+}
+
+.edit-button {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.edit-button:hover {
+  background-color: #43A047;
+}
+
+.delete-button {
+  background-color: #F44336;
+  color: #fff;
+}
+
+.delete-button:hover {
+  background-color: #E53935;
+}
+
+.dialog-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.text-field {
+  margin-top: 20px;
+}
+
+.dialog-actions {
+  justify-content: space-between;
+}
+
+.create-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.create-button:hover {
+  background-color: #388e3c;
+}
+
+.cancel-button {
+  color: #f44336;
+}

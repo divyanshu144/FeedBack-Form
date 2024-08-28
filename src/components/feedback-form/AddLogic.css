@@ -1,0 +1,31 @@
+.add-logic-container {
+    
+    /* padding: 20px;  */
+    border-radius: 8px; 
+    margin-top: 20px; 
+}
+
+.add-logic-title {
+    font-size: 1.2rem; 
+    margin-bottom: 20px; 
+}
+.formcontrol {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top:20px;
+}
+
+.switch {
+    margin-bottom: 15px; 
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+.textField {
+    margin-top: 10px; 
+    border-radius: 4px; 
+    /* padding: 5px 20px;  */
+    margin-left:10px;
+}

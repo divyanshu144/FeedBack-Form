@@ -1,0 +1,28 @@
+.single-line-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff; /* Match feedback card background */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+.single-line-input-heading {
+    margin-bottom: 16px;
+    font-weight: bold; /* Add bold font style for heading */
+}
+
+.single-line-input {
+    margin-bottom: 16px; /* Space between input and buttons */
+    width: 100%;
+}
+
+.icon-container {
+    display: flex;
+    gap: 10px;
+}
