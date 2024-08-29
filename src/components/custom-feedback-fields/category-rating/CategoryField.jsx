@@ -14,6 +14,10 @@ const CategoryField = () => {
         dispatch(updateSelectedCategory({ component: 'categoryField', selectedCategory }));
     };
 
+    const handleDelete = () => {
+        // additional delete logic if req
+    };
+
     return (
         <EditableComponent heading={categoryheading} onSave={handleSave} onDelete={handleDelete} className="category-field-container">
             <TextField

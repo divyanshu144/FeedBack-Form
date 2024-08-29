@@ -21,6 +21,10 @@ const StarRating = () => {
         dispatch(updateRatingValue({ component: 'starRating', ratingValue: tempRating }));
     };
 
+    const handleDelete = () => {
+        // additional delete logic if req
+    };
+
 
     const handleRatingChange = (event, newValue) => {
         setTempRating(newValue);

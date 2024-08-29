@@ -25,6 +25,10 @@ const TextArea = () => {
         setTempComment(event.target.value);
     };
 
+    const handleDelete = () => {
+        // additional delete logic if req
+    };
+
     return (
         <EditableComponent
             heading={tempHeading}

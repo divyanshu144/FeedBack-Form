@@ -26,6 +26,9 @@ const SmileyRating = () => {
         dispatch(updateRatingValue({ component: 'smileyRating', smileyValue: tempRating }));
     };
 
+    const handleDelete = () => {
+        // additional delete logic if req
+    };
 
     const smileyIcons = [
         { value: 1, icon: <SentimentVeryDissatisfiedIcon fontSize="large" /> },

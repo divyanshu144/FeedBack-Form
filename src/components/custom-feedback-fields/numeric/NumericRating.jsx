@@ -14,6 +14,9 @@ const NumericRating = () => {
         dispatch(updateRatingValue({ component: 'numericRating', ratingValue }));
     };
 
+    const handleDelete = () => {
+        
+    };
 
     return (
         <EditableComponent heading={numericheading} onSave={handleSave} onDelete={handleDelete} className="numeric-rating-container">

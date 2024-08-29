@@ -21,6 +21,9 @@ const SingleLineInput = () => {
         dispatch(updateInputValue({ component: 'singleLineInput', inputValue: tempInputValue }));
     };
 
+    const handleDelete = () => {
+        // additional delete logic if req
+    };
 
     return (
         <EditableComponent
