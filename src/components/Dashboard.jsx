@@ -25,11 +25,9 @@ const Dashboard = () => {
   useEffect(() => {
     const storedForms = [];
 
-    // Iterate through all keys in localStorage
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
 
-      // Check if the key starts with 'form-' to identify form-related keys
       if (key.startsWith('form-')) {
         const formData = localStorage.getItem(key);
         if (formData) {
@@ -51,7 +49,7 @@ const Dashboard = () => {
 
   const handleClose = () => {
     setOpen(false);
-    setFormTitle(""); 
+    setFormTitle("");
   };
 
   const handleCreate = () => {
@@ -63,11 +61,25 @@ const Dashboard = () => {
   };
 
   const handleDelete = (formId) => {
-    // Remove the form from localStorage
     localStorage.removeItem(`form-${formId}`);
-
-    // Update the state to reflect the deletion
     setForms(forms.filter(form => form.id !== formId));
+  };
+
+  const handleViewSubmission = (form) => {
+    const updatedForms = forms.map(f => {
+      if (f.id === form.id) {
+        const updatedForm = {
+          ...f,
+          viewedCount: (f.viewedCount || 0) + 1,
+        };
+        localStorage.setItem(form.id, JSON.stringify(updatedForm));
+        return updatedForm;
+      }
+      return f;
+    });
+
+    setForms(updatedForms);
+    navigate(`/form/${form.id}`, { state: { formData: form } });
   };
 
   return (
@@ -110,36 +122,34 @@ const Dashboard = () => {
               </div>
             </CardContent>
             <Box className="button-container">
+              <Button
+                variant="contained"
+                color="primary"
+                className="view-button"
+                onClick={() => handleViewSubmission(form)}
+              >
+                View Submission
+              </Button>
+              <div className="action-buttons">
                 <Button
                   component={Link}
-                  to={`/form/${form.id}`}
+                  to={`/edit/${form.id}`}
                   variant="contained"
-                  color="primary"
-                  className="view-button"
-                  state={{ formData: form }} 
+                  color="success"
+                  className="edit-button"
                 >
-                  View Submission
+                  Edit
                 </Button>
-                <div className="action-buttons">
-                  <Button
-                    component={Link}
-                    to={`/edit/${form.id}`}
-                    variant="contained"
-                    color="success"
-                    className="edit-button"
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    className="delete-button"
-                    onClick={() => handleDelete(form.id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </Box>
+                <Button
+                  variant="contained"
+                  color="error"
+                  className="delete-button"
+                  onClick={() => handleDelete(form.id)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </Box>
           </Card>
         ))}
       </div>

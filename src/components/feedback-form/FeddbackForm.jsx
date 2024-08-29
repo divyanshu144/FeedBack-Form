@@ -24,6 +24,8 @@ import TextArea from '../custom-feedback-fields/Text-area/TextArea';
 import SingleLineInput from '../custom-feedback-fields/single-line-input/SingleLineInput';
 import { setCurrentForm, setFormattedDate, setFormattedTime } from '../../store/componentsSlice';
 import AddLogic from './AddLogic';
+import RadioBox from '../custom-feedback-fields/radio-rating/RadioBox';
+import CategoryField from '../custom-feedback-fields/category-rating/CategoryField';
 
 const FeedbackForm = React.memo(() => {
     const [formFields, setFormFields] = useState([]);
@@ -94,6 +96,10 @@ const FeedbackForm = React.memo(() => {
                 return <SmileyRating key={index} />;
             case 'Single line input':
                 return <SingleLineInput key={index} />;
+            case 'Radio button':
+                    return <RadioBox key={index} />;
+            case 'Categories':
+                 return <CategoryField key={index} />;
             default:
                 return null;
         }

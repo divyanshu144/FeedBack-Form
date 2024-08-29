@@ -14,8 +14,6 @@ const initialState = {
     formattedTime: '',
 };
 
-
-
 const componentsSlice = createSlice({
     name: 'components',
     initialState,
