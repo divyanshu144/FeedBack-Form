@@ -47,22 +47,24 @@ const NumericRating = () => {
 
     return (
         <Box className="numeric-rating-container">
-            {isEditing ? (
-                <TextField
-                    variant="outlined"
-                    fullWidth
-                    value={tempHeading}
-                    onChange={(e) => setTempHeading(e.target.value)}
-                    margin="normal"
-                />
-            ) : (
-                <Typography variant="h6" className="rating-heading">
-                    {numericheading}
-                </Typography>
-            )}
+            <Box className="numeric-rating-header">
+                {isEditing ? (
+                    <TextField
+                        variant="outlined"
+                        fullWidth
+                        value={tempHeading}
+                        onChange={(e) => setTempHeading(e.target.value)}
+                        margin="normal"
+                    />
+                ) : (
+                    <Typography variant="h6" className="rating-heading">
+                        {numericheading}
+                    </Typography>
+                )}
+            </Box>
 
             <Box className="rating-buttons-container">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                {[1, 2, 3, 4, 5].map((num) => (
                     <Button
                         key={num}
                         variant={isEditing ? (tempRating === num ? 'contained' : 'outlined') : (ratingValue === num ? 'contained' : 'outlined')}
@@ -86,14 +88,14 @@ const NumericRating = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit rating" onClick={handleEditClick}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete rating" onClick={handleDeleteClick}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

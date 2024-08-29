@@ -1,4 +1,4 @@
-.single-line-input-container {
+.star-rating-container {
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -8,20 +8,10 @@
     margin: 16px;
 }
 
-
-.single-line-input-heading {
-    margin-bottom: 16px;
-    font-weight: bold; 
-}
-
-.single-line-input {
-    margin-bottom: 16px; 
-    width: 100%;
-}
-
 .icon-container {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
 }
 
 .editdelete-icon{

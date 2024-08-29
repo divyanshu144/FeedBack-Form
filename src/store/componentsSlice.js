@@ -96,6 +96,9 @@ const componentsSlice = createSlice({
             }
             state.currentForm = formData;
         },
+        clearCurrentForm: (state) => {
+            state.currentForm = {}; 
+        },
         setFormattedDate: (state, action) => {
             state.formattedDate = action.payload;
         },
@@ -119,7 +122,8 @@ export const {
     updateForm, 
     setCurrentForm,
     setFormattedDate, 
-    setFormattedTime, 
+    setFormattedTime,
+    clearCurrentForm, 
 } = componentsSlice.actions;
 
 export default componentsSlice.reducer;

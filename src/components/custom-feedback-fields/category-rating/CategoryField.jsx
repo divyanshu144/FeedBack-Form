@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateHeading, updateSelectedCategory } from '../../../store/componentsSlice';
-//import { updateHeading, updateSelectedCategory } from '../componentsSlice';
+import './CategoryField.css';
 
 const CategoryField = () => {
     const { categoryheading, categories, selectedCategory } = useSelector((state) => state.components.categoryField);
@@ -64,6 +64,7 @@ const CategoryField = () => {
                 label={isEditing ? "Select Category (Editing)" : "Select Category"}
                 value={isEditing ? tempSelectedCategory : selectedCategory}
                 onChange={handleCategoryChange}
+                className="category-dropdown"
             >
                 {categories.map((category, index) => (
                     <MenuItem key={index} value={category}>
@@ -83,14 +84,14 @@ const CategoryField = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit" onClick={handleEdit}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete" onClick={handleDelete}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

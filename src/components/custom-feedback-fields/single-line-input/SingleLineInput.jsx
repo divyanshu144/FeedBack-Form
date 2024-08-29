@@ -74,14 +74,14 @@ const SingleLineInput = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit" onClick={handleEdit}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete" onClick={handleDelete}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

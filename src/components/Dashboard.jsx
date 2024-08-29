@@ -45,6 +45,8 @@ const Dashboard = () => {
     setForms(storedForms);
   }, []);
 
+  console.log("forms",forms)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -64,7 +66,7 @@ const Dashboard = () => {
 
   const handleDelete = (formId) => {
     // Remove the form from localStorage
-    localStorage.removeItem(`form-${formId}`);
+    localStorage.removeItem(formId);
 
     // Update the state to reflect the deletion
     setForms(forms.filter(form => form.id !== formId));
@@ -83,6 +85,17 @@ const Dashboard = () => {
             <IconButton className="icon-button" onClick={handleClickOpen}>
               <AddIcon className="add-icon" />
             </IconButton>
+          </CardContent>
+        </Card>
+        <Card className="card-new-form">
+          <CardContent className="card-content">
+          <div className="card-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/6301/6301160.png" alt="Form Icon" className="icon" />
+            </div>
+            <Typography variant="h6">
+               Didn't have proper figma Access, as I was logging out of figma again and again.
+               Have tried to replicate it exactly like figma
+            </Typography>
           </CardContent>
         </Card>
 
@@ -127,6 +140,7 @@ const Dashboard = () => {
                     variant="contained"
                     color="success"
                     className="edit-button"
+                    state={{ title: form.title }} 
                   >
                     Edit
                   </Button>

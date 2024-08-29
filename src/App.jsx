@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/create" element={<FeedbackForm />} />
         <Route path="/form/:id" element={<FeedbackDetail />} />
-        <Route path="/edit/:formd" element={<FeedbackForm />} />
+        <Route path="/edit/:formId" element={<FeedbackForm />} />
       </Routes>
     </Router>
     </>

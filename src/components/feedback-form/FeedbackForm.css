@@ -10,8 +10,9 @@
 }
 
 .form-card {
-    width: 500px;
-    height:1360px; 
+    width: 500px; 
+    min-height: 500px;
+    margin-right: 120px; 
 }
 
 .add-fields {
@@ -22,12 +23,13 @@
     margin-bottom: 10px; 
 }
 
-.add-fields {
-    width: 317px;
+.add-fields-sidebar {
+    /* position: fixed; 
+    top: 80px;  */
+    right: 20px; 
+    width: 317px; 
     height:1554px; 
+    margin-left:120px;
     overflow-y: auto; 
-    margin-left:200px;
-    background-color: #FFFFFF;
-    
 }
 

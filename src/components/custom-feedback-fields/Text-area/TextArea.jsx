@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateComment, updateHeading } from '../../../store/componentsSlice';
+import "./TextArea.css"
 
 const TextArea = () => {
     const { textheading, comment } = useSelector((state) => state.components.textArea);
@@ -82,14 +83,14 @@ const TextArea = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit heading" onClick={handleEditClick}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete comment" onClick={handleDeleteClick}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

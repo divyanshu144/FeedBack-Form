@@ -4,7 +4,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateHeading, updateOptions } from '../../../store/componentsSlice';
-//import { updateHeading, updateSelectedOption } from '../componentsSlice';
+import "./RadioBox.css"
+
 
 const RadioBox = () => {
     const { radioheading, options, selectedOption } = useSelector((state) => state.components.radioBox);
@@ -83,14 +84,14 @@ const RadioBox = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit" onClick={handleEdit}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete" onClick={handleDelete}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

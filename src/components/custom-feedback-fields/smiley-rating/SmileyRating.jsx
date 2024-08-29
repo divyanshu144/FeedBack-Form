@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateHeading, updateRatingValue } from '../../../store/componentsSlice';
+import "./SmileyRating.css"
 
 
 const SmileyRating = () => {
@@ -97,14 +98,14 @@ const SmileyRating = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit rating" onClick={handleEditClick}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete rating" onClick={handleDeleteClick}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

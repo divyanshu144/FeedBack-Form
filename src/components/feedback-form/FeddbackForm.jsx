@@ -3,7 +3,7 @@ import {
     AppBar, Toolbar, Box, Card, CardContent, Typography, Button, Divider, List,
     ListItem, ListItemIcon, ListItemText, IconButton, TextField
 } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
@@ -22,18 +22,24 @@ import SmileyRating from '../custom-feedback-fields/smiley-rating/SmileyRating';
 import NumericRating from '../custom-feedback-fields/numeric/NumericRating';
 import TextArea from '../custom-feedback-fields/Text-area/TextArea';
 import SingleLineInput from '../custom-feedback-fields/single-line-input/SingleLineInput';
-import { setCurrentForm, setFormattedDate, setFormattedTime } from '../../store/componentsSlice';
+import { clearCurrentForm, setCurrentForm, setFormattedDate, setFormattedTime } from '../../store/componentsSlice';
 import AddLogic from './AddLogic';
 import RadioBox from '../custom-feedback-fields/radio-rating/RadioBox';
 import CategoryField from '../custom-feedback-fields/category-rating/CategoryField';
 
 const FeedbackForm = React.memo(() => {
+
+    const location = useLocation();
+    const {title} = location.state
+    
     const [formFields, setFormFields] = useState([]);
     const [editMode, setEditMode] = useState(false);
-    const [tempTitle, setTempTitle] = useState('');
+    const [tempTitle, setTempTitle] = useState(title);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { formId } = useParams();
+
+    console.log("formId", formId)
     
     const textAreaData = useSelector((state) => state.components.textArea);
     const numericRatingData = useSelector((state) => state.components.numericRating);
@@ -66,7 +72,7 @@ const FeedbackForm = React.memo(() => {
 
     useEffect(() => {
         if (formId && !editMode) {
-            dispatch(setCurrentForm(null)); 
+            dispatch(clearCurrentForm());
         }
     }, [formId, editMode, dispatch]);
 
@@ -120,38 +126,28 @@ const FeedbackForm = React.memo(() => {
     const handleSave = () => {
         const previousData = JSON.parse(localStorage.getItem(`form-${formId}`)) || {};
         
+        const newFormId = formId || uuidv4();
         const updatedForm = {
-            id: formId || uuidv4(),
+            id: newFormId,
             title: tempTitle,
             formFields,
             data: { ...fieldData, currentDate, currentTime },
         };
     
-        // Load existing saved forms from localStorage
-        const savedForms = JSON.parse(localStorage.getItem('savedForms')) || {};
+        console.log("new-id", newFormId);
     
-        if (formId) {
-            // If formId exists, save the updated form under the existing formId
-            if (!savedForms[formId]) {
-                savedForms[formId] = [];
-            }
-            savedForms[formId].push(updatedForm); // Append the new form data to the existing array
+        const savedForms = JSON.parse(localStorage.getItem(`savedForms-${newFormId}`)) || {};
+        
+        if (savedForms[newFormId]) {
+            savedForms[newFormId].push(updatedForm); 
         } else {
-            // If there's no formId, generate a new one and save the form data under this new ID
-            const newFormId = uuidv4();
             savedForms[newFormId] = [updatedForm];
-            updatedForm.id = newFormId; // Update the form ID to the new ID
         }
     
-        // Update the current form in the Redux store
-        dispatch(setCurrentForm({ formId: updatedForm.id, formData: updatedForm }));
+        dispatch(setCurrentForm({ formId: newFormId, formData: updatedForm }));
     
-        // Save the forms with all versions under their respective form IDs
-        localStorage.setItem('savedForms', JSON.stringify(savedForms));
+        localStorage.setItem(`savedForms-${newFormId}`, JSON.stringify(savedForms));
     
-        // Optionally save the latest form data under its specific form ID (you might want to keep this commented out)
-        // localStorage.setItem(`form-${updatedForm.id}`, JSON.stringify(updatedForm));
-        
         alert('Changes saved locally!');
     };
     
@@ -159,16 +155,17 @@ const FeedbackForm = React.memo(() => {
         const date = new Date();
         const formattedDate = date.toLocaleDateString();
         const formattedTime = date.toLocaleTimeString();
-
+    
         dispatch(setFormattedDate(formattedDate));
         dispatch(setFormattedTime(formattedTime));
-
-        const formKey = `form-${formId || uuidv4()}`;
+    
+        const newFormId = formId || uuidv4();
+        const formKey = `form-${newFormId}`;
         const storedForm = JSON.parse(localStorage.getItem(formKey)) || {};
         const submittedCount = (storedForm.submittedCount || 0) + 1;
-
+    
         const updatedForm = {
-            id: formId || uuidv4(),
+            id: newFormId,
             title: tempTitle,
             formFields,
             data: {
@@ -178,9 +175,9 @@ const FeedbackForm = React.memo(() => {
             },
             submittedCount,
         };
-
-        dispatch(setCurrentForm({ formId: updatedForm.id, formData: updatedForm }));
-
+    
+        dispatch(setCurrentForm({ formId: newFormId, formData: updatedForm }));
+    
         try {
             localStorage.setItem(formKey, JSON.stringify(updatedForm));
             alert(`Form published successfully! This form has been submitted ${updatedForm.submittedCount} times.`);
@@ -208,9 +205,11 @@ const FeedbackForm = React.memo(() => {
         <div className="form-wrapper">
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        Feedback Form
-                    </Typography>
+                <Link to="/" style={{ textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
+                        <Typography variant="h6">
+                            Dashboard
+                        </Typography>
+                    </Link>
                     {formId ? (
                         <Button color="inherit" onClick={handleSave}>
                             Save

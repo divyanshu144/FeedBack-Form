@@ -3,8 +3,7 @@ import { Box, Typography, Rating, IconButton, Button, TextField } from '@mui/mat
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
-//import { updateHeading, updateRatingValue } from '../componentsSlice';
-//import './StarRating.css';
+import './StarRating.css';
 import { updateHeading, updateRatingValue } from '../../../store/componentsSlice';
 
 const StarRating = () => {
@@ -82,14 +81,14 @@ const StarRating = () => {
                         </Button>
                     </>
                 ) : (
-                    <>
+                    <div className="editdelete-icon">
                         <IconButton color="primary" aria-label="edit rating" onClick={handleEditClick}>
                             <EditIcon />
                         </IconButton>
                         <IconButton color="secondary" aria-label="delete rating" onClick={handleDeleteClick}>
                             <DeleteIcon />
                         </IconButton>
-                    </>
+                    </div>
                 )}
             </Box>
         </Box>

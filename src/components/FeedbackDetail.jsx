@@ -24,11 +24,13 @@ const FeedbackDetail = () => {
   const [viewedCount, setViewedCount] = useState(formData.viewedCount || 0);
 
   useEffect(() => {
-    // Increase the view count
+    // Increment the view count
     const newViewedCount = viewedCount + 1;
+
+    // Update state with the new view count
     setViewedCount(newViewedCount);
 
-    // Update form data with the new viewed count
+    // Update the formData object with the new view count
     const updatedFormData = {
       ...formData,
       viewedCount: newViewedCount,
@@ -36,7 +38,7 @@ const FeedbackDetail = () => {
 
     // Save the updated form data to localStorage
     localStorage.setItem(formData.id, JSON.stringify(updatedFormData));
-  }, []);
+  }, []); // Only run on component mount
 
   const handleBackClick = () => {
     navigate('/');
