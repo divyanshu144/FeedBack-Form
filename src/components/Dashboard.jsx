@@ -93,7 +93,7 @@ const Dashboard = () => {
             </div>
             <Typography variant="h6">
                Didn't have proper figma Access, as I was logging out of figma again and again.
-               Have tried to replicate it exactly like figma
+               Have tried my best to replicate it.
             </Typography>
           </CardContent>
         </Card>
