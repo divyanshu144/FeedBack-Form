@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -20,7 +20,23 @@ const FeedbackDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { formData } = location.state;
-  console.log("formData", formData);
+
+  const [viewedCount, setViewedCount] = useState(formData.viewedCount || 0);
+
+  useEffect(() => {
+    // Increase the view count
+    const newViewedCount = viewedCount + 1;
+    setViewedCount(newViewedCount);
+
+    // Update form data with the new viewed count
+    const updatedFormData = {
+      ...formData,
+      viewedCount: newViewedCount,
+    };
+
+    // Save the updated form data to localStorage
+    localStorage.setItem(formData.id, JSON.stringify(updatedFormData));
+  }, []);
 
   const handleBackClick = () => {
     navigate('/');
@@ -38,23 +54,22 @@ const FeedbackDetail = () => {
           </Typography>
         </Box>
         <Grid container spacing={2} className="stats-container">
-            <div className="stats-box">
-              <Typography variant="h3" className="stats-number">
-                {formData.viewedCount || "0"}
-              </Typography>
-              <Typography variant="h6">VIEWS</Typography>
-            </div>
-          
-            <div className="stats-box">
-              <Typography variant="h3" className="stats-number">
-                {formData.submittedCount || "0"}
-              </Typography>
-              <Typography variant="h6">Submitted</Typography>
-            </div>
-        
+          <div className="stats-box">
+            <Typography variant="h3" className="stats-number">
+              {viewedCount}
+            </Typography>
+            <Typography variant="h6">VIEWS</Typography>
+          </div>
+
+          <div className="stats-box">
+            <Typography variant="h3" className="stats-number">
+              {formData.submittedCount || "0"}
+            </Typography>
+            <Typography variant="h6">Submitted</Typography>
+          </div>
         </Grid>
         <Box className="date-info">
-          <div className="heading">Page URL contains example.com </div>
+          <div className="heading">Page URL contains example.com</div>
           <div className="heading">Date Published: {formData.data.currentDate || "No date"}</div>
           <div className="heading">Time: {formData.data.currentTime || "No Time"}</div>
         </Box>
