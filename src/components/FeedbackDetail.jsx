@@ -19,26 +19,29 @@ import './FeedbackDetail.css';
 const FeedbackDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { formData } = location.state;
+  const { formId, formData } = location.state;
 
-  const [viewedCount, setViewedCount] = useState(formData.viewedCount || 0);
+  const [formsData, setFormsData] = useState([]);
+  const [viewedCount, setViewedCount] = useState(0);
 
   useEffect(() => {
-    // Increment the view count
-    const newViewedCount = viewedCount + 1;
 
-    // Update state with the new view count
-    setViewedCount(newViewedCount);
+    const storedData = JSON.parse(localStorage.getItem(`savedForms-${formId}`)) || [];
+      setFormsData(storedData);
 
-    // Update the formData object with the new view count
-    const updatedFormData = {
-      ...formData,
-      viewedCount: newViewedCount,
-    };
+      // Increment the view count
+      const newViewedCount = (storedData.viewedCount || 0) + 1;
+      setViewedCount(newViewedCount);
 
-    // Save the updated form data to localStorage
-    localStorage.setItem(formData.id, JSON.stringify(updatedFormData));
-  }, []); // Only run on component mount
+      // Update the formDetail object with the new view count
+      const updatedForm = {
+        ...formData,
+        viewedCount: newViewedCount,
+      };
+
+      localStorage.setItem(`savedForms-${formId}`, JSON.stringify(updatedForm));
+
+  }, [formData]);
 
   const handleBackClick = () => {
     navigate('/');
@@ -58,7 +61,7 @@ const FeedbackDetail = () => {
         <Grid container spacing={2} className="stats-container">
           <div className="stats-box">
             <Typography variant="h3" className="stats-number">
-              {viewedCount}
+              {viewedCount || "0"}
             </Typography>
             <Typography variant="h6">VIEWS</Typography>
           </div>

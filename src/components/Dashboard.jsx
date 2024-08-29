@@ -45,7 +45,6 @@ const Dashboard = () => {
     setForms(storedForms);
   }, []);
 
-  console.log("forms",forms)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -129,7 +128,7 @@ const Dashboard = () => {
                   variant="contained"
                   color="primary"
                   className="view-button"
-                  state={{ formData: form }} 
+                  state={{ formId: form.id, formData: form }} 
                 >
                   View Submission
                 </Button>
