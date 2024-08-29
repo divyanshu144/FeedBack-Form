@@ -88,13 +88,19 @@ const componentsSlice = createSlice({
         },
         setCurrentForm: (state, action) => {
             const { formId, formData } = action.payload;
-            const formIndex = state.forms.findIndex(form => form.id === formId);
-            if (formIndex !== -1) {
-                state.forms[formIndex] = formData; 
+        
+            // Check if formData exists and has an id
+            if (formData && formId) {
+                const formIndex = state.forms.findIndex(form => form.id === formId);
+                if (formIndex !== -1) {
+                    state.forms[formIndex] = formData; // Update existing form
+                } else {
+                    state.forms.push(formData); // Add new form
+                }
+                state.currentForm = formData; // Update current form in state
             } else {
-                state.forms.push(formData); 
+                console.error('Invalid form data:', formData);
             }
-            state.currentForm = formData;
         },
         clearCurrentForm: (state) => {
             state.currentForm = {}; 

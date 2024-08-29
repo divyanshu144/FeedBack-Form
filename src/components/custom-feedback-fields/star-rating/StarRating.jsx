@@ -28,6 +28,7 @@ const StarRating = () => {
 
     const handleRatingChange = (event, newValue) => {
         setTempRating(newValue);
+        dispatch(updateRatingValue({ component: 'starRating', ratingValue: newValue }));
     };
 
     return (

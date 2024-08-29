@@ -124,9 +124,10 @@ const FeedbackForm = React.memo(() => {
     }, [formFields, textAreaData, numericRatingData, starRatingData, smileyRatingData, singleData, radioData, categoryData]);
 
     const handleSave = () => {
-        const previousData = JSON.parse(localStorage.getItem(`form-${formId}`)) || {};
-        
         const newFormId = formId || uuidv4();
+        const formKey = `form-${newFormId}`;
+        const savedFormsKey = `savedForms-${newFormId}`;
+        
         const updatedForm = {
             id: newFormId,
             title: tempTitle,
@@ -134,19 +135,17 @@ const FeedbackForm = React.memo(() => {
             data: { ...fieldData, currentDate, currentTime },
         };
     
-        console.log("new-id", newFormId);
+        // Retrieve the existing saved forms for this formId from localStorage
+        const savedForms = JSON.parse(localStorage.getItem(savedFormsKey)) || [];
     
-        const savedForms = JSON.parse(localStorage.getItem(`savedForms-${newFormId}`)) || {};
-        
-        if (savedForms[newFormId]) {
-            savedForms[newFormId].push(updatedForm); 
-        } else {
-            savedForms[newFormId] = [updatedForm];
-        }
+        // Append the updated form data to the existing saved forms array
+        savedForms.push(updatedForm);
     
+        // Save the updated forms array back to localStorage
+        localStorage.setItem(savedFormsKey, JSON.stringify(savedForms));
+    
+        // Update the current form in Redux store
         dispatch(setCurrentForm({ formId: newFormId, formData: updatedForm }));
-    
-        localStorage.setItem(`savedForms-${newFormId}`, JSON.stringify(savedForms));
     
         alert('Changes saved locally!');
     };

@@ -21,6 +21,13 @@ const SingleLineInput = () => {
         dispatch(updateInputValue({ component: 'singleLineInput', inputValue: tempInputValue }));
     };
 
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setTempInputValue(value)
+        dispatch(updateInputValue({ component: 'singleLineInput', inputValue: value}));
+        
+    };
+
     const handleDelete = () => {
         // additional delete logic if req
     };
@@ -37,7 +44,7 @@ const SingleLineInput = () => {
                 variant="outlined"
                 fullWidth
                 value={tempInputValue}
-                onChange={(e) => setTempInputValue(e.target.value)}
+                onChange={handleInputChange}
                 placeholder="Enter text here..."
             />
         </EditableComponent>

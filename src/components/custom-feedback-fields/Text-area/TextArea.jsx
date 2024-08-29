@@ -22,7 +22,9 @@ const TextArea = () => {
     };
 
     const handleCommentChange = (event) => {
-        setTempComment(event.target.value);
+        const comment = event.target.value
+        setTempComment(comment);
+        dispatch(updateComment({ component: 'textArea', comment: comment  }));
     };
 
     const handleDelete = () => {

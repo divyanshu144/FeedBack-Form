@@ -40,6 +40,7 @@ const SmileyRating = () => {
 
     const handleRatingChange = (newValue) => {
         setTempRating(newValue);
+        dispatch(updateRatingValue({ component: 'smileyRating', smileyValue: newValue }));
     };
 
     return (
