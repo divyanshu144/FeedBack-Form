@@ -1,55 +1,31 @@
-import React, { useState } from 'react';
-import { Box, Typography, IconButton, Button, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, IconButton, TextField } from '@mui/material';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateHeading, updateRatingValue } from '../../../store/componentsSlice';
-import "./SmileyRating.css"
-
+import EditableComponent from '../../common/EditableComponent';
+import './SmileyRating.css';
 
 const SmileyRating = () => {
     const { smileyheading, smileyValue } = useSelector((state) => state.components.smileyRating);
     const dispatch = useDispatch();
 
-    const [isEditing, setIsEditing] = useState(false);
     const [tempHeading, setTempHeading] = useState(smileyheading);
     const [tempRating, setTempRating] = useState(smileyValue);
-    const [isVisible, setIsVisible] = useState(true);
 
-    const handleRatingChange = (newValue) => {
-        if (isEditing) {
-            setTempRating(newValue);
-        } else {
-            dispatch(updateRatingValue({ component: 'smileyRating', smileyValue: newValue }));
-        }
-    };
-
-    const handleEditClick = () => {
+    useEffect(() => {
         setTempHeading(smileyheading);
-        setTempRating(smileyValue);
-        setIsEditing(true);
-    };
+    }, [smileyheading]);
 
-    const handleSaveClick = () => {
-        dispatch(updateHeading({ component: 'smileyRating', newHeading: tempHeading }));
+    const handleSave = (newHeading) => {
+        dispatch(updateHeading({ component: 'smileyRating', newHeading }));
         dispatch(updateRatingValue({ component: 'smileyRating', smileyValue: tempRating }));
-        setIsEditing(false);
     };
 
-    const handleCancelClick = () => {
-        setIsEditing(false);
-    };
-
-    const handleDeleteClick = () => {
-        setIsVisible(false);
-    };
-
-    if (!isVisible) return null;
 
     const smileyIcons = [
         { value: 1, icon: <SentimentVeryDissatisfiedIcon fontSize="large" /> },
@@ -59,22 +35,17 @@ const SmileyRating = () => {
         { value: 5, icon: <SentimentVerySatisfiedIcon fontSize="large" /> },
     ];
 
-    return (
-        <Box className="smiley-rating-container">
-            {isEditing ? (
-                <TextField
-                    variant="outlined"
-                    fullWidth
-                    value={tempHeading}
-                    onChange={(e) => setTempHeading(e.target.value)}
-                    margin="normal"
-                />
-            ) : (
-                <Typography variant="h6" className="rating-heading">
-                    {smileyheading}
-                </Typography>
-            )}
+    const handleRatingChange = (newValue) => {
+        setTempRating(newValue);
+    };
 
+    return (
+        <EditableComponent
+            heading={tempHeading}
+            onSave={handleSave}
+            onDelete={handleDelete}
+            className="smiley-rating-container"
+        >
             <Box className="smiley-icons">
                 {smileyIcons.map((smiley) => (
                     <IconButton
@@ -86,29 +57,7 @@ const SmileyRating = () => {
                     </IconButton>
                 ))}
             </Box>
-
-            <Box className="icon-container">
-                {isEditing ? (
-                    <>
-                        <Button variant="contained" color="primary" onClick={handleSaveClick}>
-                            Save
-                        </Button>
-                        <Button variant="outlined" color="secondary" onClick={handleCancelClick}>
-                            Cancel
-                        </Button>
-                    </>
-                ) : (
-                    <div className="editdelete-icon">
-                        <IconButton color="primary" aria-label="edit rating" onClick={handleEditClick}>
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton color="secondary" aria-label="delete rating" onClick={handleDeleteClick}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </div>
-                )}
-            </Box>
-        </Box>
+        </EditableComponent>
     );
 };
 

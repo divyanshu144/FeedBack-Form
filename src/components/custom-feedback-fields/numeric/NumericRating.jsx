@@ -1,104 +1,36 @@
-import React, { useState } from 'react';
-import { Box, Typography, Button, TextField, IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React from 'react';
+import { Box, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateHeading, updateRatingValue } from '../../../store/componentsSlice';
 import './NumericRating.css'; 
+import EditableComponent from '../../common/EditableComponent';
 
 const NumericRating = () => {
     const { numericheading, ratingValue } = useSelector((state) => state.components.numericRating);
     const dispatch = useDispatch();
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [tempHeading, setTempHeading] = useState(numericheading);
-    const [tempRating, setTempRating] = useState(ratingValue);
-    const [isVisible, setIsVisible] = useState(true);
-
-    const handleRatingChange = (value) => {
-        if (isEditing) {
-            setTempRating(value);
-        } else {
-            dispatch(updateRatingValue({ component: 'numericRating', ratingValue: value }));
-        }
+    const handleSave = (newHeading) => {
+        dispatch(updateHeading({ component: 'numericRating', newHeading }));
+        dispatch(updateRatingValue({ component: 'numericRating', ratingValue }));
     };
 
-    const handleEditClick = () => {
-        setTempHeading(numericheading);
-        setTempRating(ratingValue);
-        setIsEditing(true);
-    };
-
-    const handleSaveClick = () => {
-        dispatch(updateHeading({ component: 'numericRating', newHeading: tempHeading }));
-        dispatch(updateRatingValue({ component: 'numericRating', ratingValue: tempRating }));
-        setIsEditing(false);
-    };
-
-    const handleCancelClick = () => {
-        setIsEditing(false);
-    };
-
-    const handleDeleteClick = () => {
-        setIsVisible(false);
-    };
-
-    if (!isVisible) return null;
 
     return (
-        <Box className="numeric-rating-container">
-            <Box className="numeric-rating-header">
-                {isEditing ? (
-                    <TextField
-                        variant="outlined"
-                        fullWidth
-                        value={tempHeading}
-                        onChange={(e) => setTempHeading(e.target.value)}
-                        margin="normal"
-                    />
-                ) : (
-                    <Typography variant="h6" className="rating-heading">
-                        {numericheading}
-                    </Typography>
-                )}
-            </Box>
-
+        <EditableComponent heading={numericheading} onSave={handleSave} onDelete={handleDelete} className="numeric-rating-container">
             <Box className="rating-buttons-container">
                 {[1, 2, 3, 4, 5].map((num) => (
                     <Button
                         key={num}
-                        variant={isEditing ? (tempRating === num ? 'contained' : 'outlined') : (ratingValue === num ? 'contained' : 'outlined')}
+                        variant={ratingValue === num ? 'contained' : 'outlined'}
                         color="primary"
-                        onClick={() => handleRatingChange(num)}
+                        onClick={() => dispatch(updateRatingValue({ component: 'numericRating', ratingValue: num }))}
                         className="rating-button"
                     >
                         {num}
                     </Button>
                 ))}
             </Box>
-
-            <Box className="icon-container">
-                {isEditing ? (
-                    <>
-                        <Button variant="contained" color="primary" onClick={handleSaveClick}>
-                            Save
-                        </Button>
-                        <Button variant="outlined" color="secondary" onClick={handleCancelClick}>
-                            Cancel
-                        </Button>
-                    </>
-                ) : (
-                    <div className="editdelete-icon">
-                        <IconButton color="primary" aria-label="edit rating" onClick={handleEditClick}>
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton color="secondary" aria-label="delete rating" onClick={handleDeleteClick}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </div>
-                )}
-            </Box>
-        </Box>
+        </EditableComponent>
     );
 };
 

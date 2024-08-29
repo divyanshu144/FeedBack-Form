@@ -1,67 +1,28 @@
-import React, { useState } from 'react';
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, IconButton, Button, TextField } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React from 'react';
+import { Box, RadioGroup, FormControlLabel, Radio, TextField } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateHeading, updateOptions } from '../../../store/componentsSlice';
-import "./RadioBox.css"
-
+import "./RadioBox.css";
+import EditableComponent from '../../common/EditableComponent';
 
 const RadioBox = () => {
     const { radioheading, options, selectedOption } = useSelector((state) => state.components.radioBox);
     const dispatch = useDispatch();
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [tempHeading, setTempHeading] = useState(radioheading);
-    const [tempSelectedOption, setTempSelectedOption] = useState(selectedOption);
-    const [isDeleted, setIsDeleted] = useState(false);
-
-    const handleEdit = () => {
-        setTempHeading(radioheading);
-        setTempSelectedOption(selectedOption);
-        setIsEditing(true);
-    };
-
-    const handleSave = () => {
-        dispatch(updateHeading({ component: 'radioBox', newHeading: tempHeading }));
-        dispatch(updateOptions({ component: 'radioBox', selectedOption: tempSelectedOption }));
-        setIsEditing(false);
-    };
-
-    const handleCancel = () => {
-        setIsEditing(false);
+    const handleSave = (newHeading) => {
+        dispatch(updateHeading({ component: 'radioBox', newHeading }));
+        dispatch(updateOptions({ component: 'radioBox', selectedOption }));
     };
 
     const handleDelete = () => {
-        setIsDeleted(true);
+        // Handle any additional logic for delete if needed
     };
-
-    const handleOptionChange = (event) => {
-        setTempSelectedOption(event.target.value);
-    };
-
-    if (isDeleted) return null;
 
     return (
-        <Box className="radio-box-container">
-            {isEditing ? (
-                <TextField
-                    className="radio-box-heading"
-                    variant="outlined"
-                    fullWidth
-                    value={tempHeading}
-                    onChange={(e) => setTempHeading(e.target.value)}
-                    margin="normal"
-                />
-            ) : (
-                <Typography variant="h6" className="radio-box-heading">
-                    {radioheading}
-                </Typography>
-            )}
-
+        <EditableComponent heading={radioheading} onSave={handleSave} onDelete={handleDelete} className="radio-box-container">
             <RadioGroup
-                value={isEditing ? tempSelectedOption : selectedOption}
-                onChange={handleOptionChange}
+                value={selectedOption}
+                onChange={(e) => dispatch(updateOptions({ component: 'radioBox', selectedOption: e.target.value }))}
             >
                 {options.map((option, index) => (
                     <FormControlLabel
@@ -72,29 +33,7 @@ const RadioBox = () => {
                     />
                 ))}
             </RadioGroup>
-
-            <Box className="icon-container">
-                {isEditing ? (
-                    <>
-                        <Button variant="contained" color="primary" onClick={handleSave}>
-                            Save
-                        </Button>
-                        <Button variant="outlined" color="secondary" onClick={handleCancel}>
-                            Cancel
-                        </Button>
-                    </>
-                ) : (
-                    <div className="editdelete-icon">
-                        <IconButton color="primary" aria-label="edit" onClick={handleEdit}>
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton color="secondary" aria-label="delete" onClick={handleDelete}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </div>
-                )}
-            </Box>
-        </Box>
+        </EditableComponent>
     );
 };
 
