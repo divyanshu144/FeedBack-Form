@@ -114,6 +114,10 @@ const FeedbackDetail = () => {
               <Typography variant="body2" className="feedback-answer">
                 {formData?.data?.singleData?.inputValue}
               </Typography>
+              <Typography>{formData?.data?.categoryData?.categoryheading}</Typography>
+              <Typography variant="body2" className="feedback-answer">
+                {formData?.data?.categoryData?.selectedCategory}
+              </Typography>
               <Typography className="feedback-date">
                 {formData.data.currentDate}
               </Typography>

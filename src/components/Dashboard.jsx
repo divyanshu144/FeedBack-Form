@@ -117,7 +117,7 @@ const Dashboard = () => {
                   Viewed: {form.viewedCount || '0'}
                 </Typography>
                 <Typography variant="body2" className="subtitle">
-                  Date Published: {form.data.currentDate || 'No date'}
+                  {/* Date Published: {form.data.currentDate || 'No date'} */}
                 </Typography>
               </div>
             </CardContent>

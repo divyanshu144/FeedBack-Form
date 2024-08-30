@@ -12,6 +12,7 @@ const initialState = {
     currentForm: null,
     formattedDate: '',
     formattedTime: '',
+    title: '',
 };
 
 const componentsSlice = createSlice({
@@ -110,6 +111,9 @@ const componentsSlice = createSlice({
         },
         setFormattedTime: (state, action) => {
             state.formattedTime = action.payload;
+        },
+        setTitle: (state, action) => {
+            state.title = action.payload
         },
     },
 });

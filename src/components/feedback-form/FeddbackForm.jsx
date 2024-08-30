@@ -125,9 +125,9 @@ const FeedbackForm = React.memo(() => {
 
     const handleSave = () => {
         const newFormId = formId || uuidv4();
-        const formKey = `form-${newFormId}`;
+        const formKey = `form-${formId}`;
         const savedFormsKey = `savedForms-${newFormId}`;
-        
+    
         const updatedForm = {
             id: newFormId,
             title: tempTitle,
@@ -135,19 +135,41 @@ const FeedbackForm = React.memo(() => {
             data: { ...fieldData, currentDate, currentTime },
         };
     
-        // Retrieve the existing saved forms for this formId from localStorage
-        const savedForms = JSON.parse(localStorage.getItem(savedFormsKey)) || [];
+        if (formId) {
+           // Retrieve the existing saved forms for this formId from localStorage
+            let savedForms = localStorage.getItem(formKey);
+            savedForms = savedForms ? JSON.parse(savedForms) : [];
+
+            // Ensure savedForms is an array
+            if (!Array.isArray(savedForms)) {
+                savedForms = [];
+        }
     
-        // Append the updated form data to the existing saved forms array
-        savedForms.push(updatedForm);
+            // Update the existing form in the array or add it if it doesn't exist
+            const formIndex = savedForms.findIndex(form => form.id === formId);
+            if (formIndex !== -1) {
+                savedForms[formIndex] = updatedForm;
+            } else {
+                savedForms.push(updatedForm);
+            }
     
-        // Save the updated forms array back to localStorage
-        localStorage.setItem(savedFormsKey, JSON.stringify(savedForms));
+            // Save the updated forms array back to localStorage
+            //localStorage.setItem(savedFormsKey, JSON.stringify(savedForms));
+            localStorage.setItem(formKey, JSON.stringify(savedForms));
     
-        // Update the current form in Redux store
-        dispatch(setCurrentForm({ formId: newFormId, formData: updatedForm }));
+            // Update the current form in Redux store
+            dispatch(setCurrentForm({ formId: newFormId, formData: updatedForm }));
     
-        alert('Changes saved locally!');
+            alert('Changes saved local storage!');
+            navigate('/');
+        } else {
+            // Handle the case where there is no formId (creating a new form)
+            localStorage.setItem(formKey, JSON.stringify(updatedForm));
+            dispatch(setCurrentForm({ formId: newFormId, formData: updatedForm }));
+            
+            alert('Form created and saved locally!');
+            navigate('/');
+        }
     };
     
     const handlePublish = async () => {
